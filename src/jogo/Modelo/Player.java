@@ -8,14 +8,18 @@ public class Player {
 	
 	private int x, y, dx, dy, altura, largura;
 	private Image imagem;
+	private ImageIcon referencia = new ImageIcon("res\\playerW.png");
+	private ImageIcon W = new ImageIcon("res\\playerW.png");
+	private ImageIcon S = new ImageIcon("res\\playerS.png");
+	private ImageIcon A = new ImageIcon("res\\playerA.png");
+	private ImageIcon D = new ImageIcon("res\\playerD.png");
 	
 	public Player() {
-		this.x = 100;
-		this.y = 100;
+		this.x = 472;
+		this.y = 500;
 	}
 	
 	public void load() {
-		ImageIcon referencia = new ImageIcon("res\\player.png");
 		imagem = referencia.getImage();
 		
 		altura = imagem.getHeight(null);
@@ -31,15 +35,19 @@ public class Player {
 		int cod = tecla.getKeyCode();
 		if(cod == KeyEvent.VK_W) {
 			dy = -7;
+			imagem = W.getImage();			
 		}
 		if(cod == KeyEvent.VK_S) {
 			dy = 7;
+			imagem = S.getImage();	
 		}
 		if(cod == KeyEvent.VK_A) {
 			dx = -7;
+			imagem = A.getImage();	
 		}
 		if(cod == KeyEvent.VK_D) {
 			dx = 7;
+			imagem = D.getImage();	
 		}
 	}
 	

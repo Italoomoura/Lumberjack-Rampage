@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 public class Player {
 	
 	private int x, y, dx, dy, altura, largura;
+	private boolean isVisivel;
 	
 	private Image imagem;
 	private ImageIcon referencia = new ImageIcon("res\\playerW.png");
@@ -17,13 +18,11 @@ public class Player {
 	private ImageIcon A = new ImageIcon("res\\playerA.png");
 	private ImageIcon D = new ImageIcon("res\\playerD.png");
 	
-	private List <Tiro> tiros;
-	
 	public Player() {
 		this.x = 472;
 		this.y = 500;
+		isVisivel = true;
 		
-		tiros = new ArrayList<Tiro>();
 	}
 	
 	public void load() {
@@ -42,15 +41,8 @@ public class Player {
 		return new Rectangle(x,y,largura,altura);
 	}
 	
-	public void tiroSimples() {
-		this.tiros.add(new Tiro(x+largura, y+(altura/2)));
-	}
-	
 	public void keyPressed(KeyEvent tecla) {
 		int cod = tecla.getKeyCode();
-		if(cod == KeyEvent.VK_SPACE) {
-			tiroSimples();		
-		}
 		
 		if(cod == KeyEvent.VK_W) {
 			dy = -7;
@@ -97,9 +89,13 @@ public class Player {
 	public Image getImagem() {
 		return imagem;
 	}
+	
+	public boolean isVisivel() {
+		return isVisivel;
+	}
 
-	public List<Tiro> getTiros() {
-		return tiros;
+	public void setVisivel(boolean isVisivel) {
+		this.isVisivel = isVisivel;
 	}
 	
 }

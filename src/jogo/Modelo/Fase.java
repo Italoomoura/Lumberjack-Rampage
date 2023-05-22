@@ -1,4 +1,6 @@
 package jogo.Modelo;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -9,6 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -18,10 +23,11 @@ public class Fase extends JPanel implements ActionListener{
 	private Image fundo, bomf, ruimf;
 	private Player player;
 	private Timer timer;
-	private PolicialAtirador atirador;
-	private Arvore arvore[] = new Arvore[5];
-	private int i = 0;
+	private PolicialAtirador atirador, atirador2;
+	private Arvore arvore[] = new Arvore[51];
+	private int i = 0, arvoresCortadas = 0;
 	private boolean isRunning, bom;
+	
 	ImageIcon referenciaFundo = new ImageIcon("res\\background.png");
 	ImageIcon referenciaBom = new ImageIcon("res\\fimbom.png");
 	ImageIcon referenciaRuim = new ImageIcon("res\\fimruim.png");
@@ -36,14 +42,19 @@ public class Fase extends JPanel implements ActionListener{
 		player = new Player();
 		player.load();
 		
+		//Render do policial
 		atirador = new PolicialAtirador();
-		atirador.load();
+		atirador.load(800, 600); //deixei parametros no load do policial assim fica fácil de escolher nova posição;
 		
+		atirador2 = new PolicialAtirador();
+		atirador2.load(50, 100);
+		
+		//Você é simplesmente psicopata por ter feito isso aqui, n é possível q esse seja o jeito certo
 		for (int i = 0; i < arvore.length; i++) {
 			arvore[i] = new Arvore();
 			arvore[i].load(); // Inicializa cada elemento do array com uma nova instância de Arvore
 		}
-		System.out.println(arvore.length);
+		
 
 		addMouseListener(new MouseHandler());
 		addKeyListener(new TecladoAdapter());
@@ -63,6 +74,11 @@ public class Fase extends JPanel implements ActionListener{
 		}
 		if(atirador.isVisivel()) {
 			graficos.drawImage(atirador.getImagem(), atirador.getX(), atirador.getY(), this);
+			graficos.drawImage(atirador2.getImagem(), atirador2.getX(), atirador2.getY(), this);
+		}
+		
+		if (arvoresCortadas >= 5) {
+			graficos.drawImage(atirador2.getImagem(), atirador2.getX(), atirador2.getY(), this);
 		}
 		
 		if(i != arvore.length-1) {
@@ -70,7 +86,6 @@ public class Fase extends JPanel implements ActionListener{
 				graficos.drawImage(arvore[i].getImagem(), arvore[i].getX(), arvore[i].getY(), this);
 			}
 			else {
-				System.out.println(i);
 				i+=1;
 			}
 		}
@@ -90,6 +105,16 @@ public class Fase extends JPanel implements ActionListener{
 			}
 		}
 		
+		
+		// Contador de árvores cortadas
+		FontRenderContext frc = graficos.getFontRenderContext();
+		Font font1 = new Font("Courier", Font.BOLD, 24);
+		String str1 = new String();
+		str1 = String.format("Árvores cortadas: %d", arvoresCortadas);
+		TextLayout tl = new TextLayout(str1, font1, frc);
+		graficos.setColor(Color.darkGray);
+		tl.draw(graficos, 385, 50);
+		
 		g.dispose();
 	}
 
@@ -104,7 +129,7 @@ public class Fase extends JPanel implements ActionListener{
 	}
 	
 	public void atualizarMovimentoInimigo() {
-	    double velocidade = 5.0; // Velocidade do inimigo
+	    double velocidade = 2.0; // Velocidade do inimigo
 
 	    // Atualiza a posição do inimigo em direção ao jogador
 	    double direcaoX = player.getX() - atirador.getX();
@@ -131,13 +156,21 @@ public class Fase extends JPanel implements ActionListener{
 		
 		if(formaArvore.intersects(formaPlayer)) {
 			arvore[i].setVisivel(false);
+			arvoresCortadas++;
+			//Novo policial quando atingir 25 árvores cortadas
+			if (arvoresCortadas == 5) {
+				atirador2 = new PolicialAtirador();
+				atirador2.load(500, 500);
+			}
 		}
+		
 		if(formaAtirador.intersects(formaPlayer)) {
 			isRunning = false;
 			bom = true;
 			atirador.setVisivel(false);
 			player.setVisivel(false);
 		}
+		
 	}
 	
 	private class MouseHandler implements MouseListener{

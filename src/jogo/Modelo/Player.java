@@ -2,8 +2,6 @@ package jogo.Modelo;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 
 public class Player {
@@ -12,7 +10,7 @@ public class Player {
 	private boolean isVisivel;
 	
 	private Image imagem;
-	private ImageIcon referencia = new ImageIcon("res\\playerW.png");
+	private ImageIcon referencia = new ImageIcon("res\\LumberjackPixelArt.png");
 	private ImageIcon W = new ImageIcon("res\\playerW.png");
 	private ImageIcon S = new ImageIcon("res\\playerS.png");
 	private ImageIcon A = new ImageIcon("res\\playerA.png");
@@ -46,19 +44,19 @@ public class Player {
 		
 		if(cod == KeyEvent.VK_W) {
 			dy = -7;
-			imagem = W.getImage();			
+			//imagem = W.getImage();	Ainda deixei esses sprites no arquivo pq n sabia se ia querer usar		
 		}
 		if(cod == KeyEvent.VK_S) {
 			dy = 7;
-			imagem = S.getImage();	
+			//imagem = S.getImage();	
 		}
 		if(cod == KeyEvent.VK_A) {
 			dx = -7;
-			imagem = A.getImage();	
+			//imagem = A.getImage();	
 		}
 		if(cod == KeyEvent.VK_D) {
 			dx = 7;
-			imagem = D.getImage();	
+			//imagem = D.getImage();	
 		}
 	}
 	

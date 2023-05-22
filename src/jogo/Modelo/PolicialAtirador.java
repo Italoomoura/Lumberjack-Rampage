@@ -17,15 +17,15 @@ private int x, y, altura, largura;
 	private List <Tiro> tiros;
 	
 	public PolicialAtirador() {
-		this.x = 800;
-		this.y = 500;
 		isVisivel = true;
 		
 		tiros = new ArrayList<Tiro>();
 	}
 	
-	public void load() {
+	public void load(int x, int y) {
 		imagem = referencia.getImage();
+		this.x = x;
+		this.y = y;
 		
 		altura = imagem.getHeight(null);
 		largura = imagem.getWidth(null);

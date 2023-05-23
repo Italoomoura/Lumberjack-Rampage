@@ -28,14 +28,15 @@ public class Fase extends JPanel implements ActionListener{
 	private int i = 0, arvoresCortadas = 0;
 	private boolean isRunning, bom;
 	
-	ImageIcon referenciaFundo = new ImageIcon("res\\background.png");
-	ImageIcon referenciaBom = new ImageIcon("res\\fimbom.png");
-	ImageIcon referenciaRuim = new ImageIcon("res\\fimruim.png");
+	ImageIcon referenciaFundo = new ImageIcon("res\\grass.png");
+	ImageIcon referenciaBom = new ImageIcon("res\\Fimbom.png");
+	ImageIcon referenciaRuim = new ImageIcon("res\\Fimruim.png");
 	
 	public Fase(){
 		isRunning = true;
 		setFocusable(true);
 		setDoubleBuffered(true);
+		
 		
 		fundo = referenciaFundo.getImage();
 		
@@ -67,7 +68,11 @@ public class Fase extends JPanel implements ActionListener{
 	public void paint(Graphics g) {
 		Graphics2D graficos = (Graphics2D) g;
 		
-		graficos.drawImage(fundo, 0, 0, null);
+		for (int i = 0; i <= 4; i++) {
+			for (int c = 0; c <= 4; c++) {
+				graficos.drawImage(fundo, 256*i, 182*c, null);
+			}
+		}
 		
 		if(player.isVisivel()) {
 			graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);

@@ -12,7 +12,7 @@ private int x, y, altura, largura;
 	
 	private Image imagem;
 	private boolean isVisivel;
-	private ImageIcon referencia = new ImageIcon("res\\atirador.png");
+	private ImageIcon referencia = new ImageIcon("res\\PolicialPixelArt2.png");
 	
 	private List <Tiro> tiros;
 	

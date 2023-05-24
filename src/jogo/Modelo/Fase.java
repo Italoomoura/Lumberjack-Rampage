@@ -9,8 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 
@@ -23,7 +21,7 @@ public class Fase extends JPanel implements ActionListener{
 	private Image fundo, bomf, ruimf;
 	private Player player;
 	private Timer timer;
-	private PolicialAtirador atirador, atirador2;
+	private Policial atirador[] = new Policial[2];
 	private Arvore arvore[] = new Arvore[51];
 	private int i = 0, arvoresCortadas = 0;
 	private boolean isRunning, bom;
@@ -44,11 +42,10 @@ public class Fase extends JPanel implements ActionListener{
 		player.load();
 		
 		//Render do policial
-		atirador = new PolicialAtirador();
-		atirador.load(800, 600); //deixei parametros no load do policial assim fica fácil de escolher nova posição;
-		
-		atirador2 = new PolicialAtirador();
-		atirador2.load(50, 100);
+		for(int i = 0; i < atirador.length; i++) {
+			atirador[i] = new Policial();
+			atirador[i].load();
+		}
 		
 		//Você é simplesmente psicopata por ter feito isso aqui, n é possível q esse seja o jeito certo
 		for (int i = 0; i < arvore.length; i++) {
@@ -56,8 +53,6 @@ public class Fase extends JPanel implements ActionListener{
 			arvore[i].load(); // Inicializa cada elemento do array com uma nova instância de Arvore
 		}
 		
-
-		addMouseListener(new MouseHandler());
 		addKeyListener(new TecladoAdapter());
 		
 		timer = new Timer(5, this);
@@ -77,14 +72,15 @@ public class Fase extends JPanel implements ActionListener{
 		if(player.isVisivel()) {
 			graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);
 		}
-		if(atirador.isVisivel()) {
-			graficos.drawImage(atirador.getImagem(), atirador.getX(), atirador.getY(), this);
-			graficos.drawImage(atirador2.getImagem(), atirador2.getX(), atirador2.getY(), this);
+		
+
+		graficos.drawImage(atirador[0].getImagem(), atirador[0].getX(), atirador[0].getY(), this);
+		
+		if(arvoresCortadas >= 25) {
+			graficos.drawImage(atirador[1].getImagem(), atirador[1].getX(), atirador[1].getY(), this);
 		}
 		
-		if (arvoresCortadas >= 5) {
-			graficos.drawImage(atirador2.getImagem(), atirador2.getX(), atirador2.getY(), this);
-		}
+
 		
 		if(i != arvore.length-1) {
 			if(arvore[i].isVisivel()) {
@@ -134,69 +130,63 @@ public class Fase extends JPanel implements ActionListener{
 	}
 	
 	public void atualizarMovimentoInimigo() {
-	    double velocidade = 2.0; // Velocidade do inimigo
+	    double v0 = 2.0, v1 = 3.0; // Velocidade do inimigo
 
 	    // Atualiza a posição do inimigo em direção ao jogador
-	    double direcaoX = player.getX() - atirador.getX();
-	    double direcaoY = player.getY() - atirador.getY();
-	    double distancia = Math.sqrt(direcaoX * direcaoX + direcaoY * direcaoY); // Distância entre o inimigo e o jogador
+	
+	    double dX0 = player.getX() - atirador[0].getX();
+		double dY0 = player.getY() - atirador[0].getY();
+		double dX1 = player.getX() - atirador[1].getX();
+		double dY1 = player.getY() - atirador[1].getY();
+		double distancia0 = Math.sqrt(dX0 * dX0 + dY0 * dY0); // Distância entre o inimigo e o jogador
+		double distancia1 = Math.sqrt(dX1 * dX1 + dY1 * dY1);
+		
+		// Normaliza a direção (transforma em um vetor unitário)
+		dX0 /= distancia0;
+		dY0 /= distancia0;
+		dX1 /= distancia1;
+		dY1 /= distancia1;
 
-	    // Normaliza a direção (transforma em um vetor unitário)
-	    direcaoX /= distancia;
-	    direcaoY /= distancia;
+		// Atualiza a posição do inimigo em direção ao jogador com base na velocidade
+		int nPX0 = (int) (atirador[0].getX() + dX0 * v0);
+		int nPY0 = (int) (atirador[0].getY() + dY0 * v0);
+		int nPX1 = (int) (atirador[1].getX() + dX1 * v1);
+		int nPY1 = (int) (atirador[1].getY() + dY1 * v1);
 
-	    // Atualiza a posição do inimigo em direção ao jogador com base na velocidade
-	    int novaPosicaoX = (int) (atirador.getX() + direcaoX * velocidade);
-	    int novaPosicaoY = (int) (atirador.getY() + direcaoY * velocidade);
-
-	    atirador.setX(novaPosicaoX);
-	    atirador.setY(novaPosicaoY);
+		atirador[0].setX(nPX0);
+		atirador[0].setY(nPY0);
+		atirador[1].setX(nPX1);
+		atirador[1].setY(nPY1);
 	}
 	
 	
 	public void checarColisoes() {
 		Rectangle formaPlayer = player.getBounds();
 		Rectangle formaArvore = arvore[i].getBounds();
-		Rectangle formaAtirador = atirador.getBounds();
+		Rectangle formaAtirador0 = atirador[0].getBounds();
+		Rectangle formaAtirador1 = atirador[1].getBounds();
 		
 		if(formaArvore.intersects(formaPlayer)) {
 			arvore[i].setVisivel(false);
 			arvoresCortadas++;
-			//Novo policial quando atingir 25 árvores cortadas
-			if (arvoresCortadas == 5) {
-				atirador2 = new PolicialAtirador();
-				atirador2.load(500, 500);
-			}
 		}
 		
-		if(formaAtirador.intersects(formaPlayer)) {
+		if(formaAtirador0.intersects(formaPlayer)) {
 			isRunning = false;
 			bom = true;
-			atirador.setVisivel(false);
+			atirador[0].setVisivel(false);
+			atirador[1].setVisivel(false);
+			player.setVisivel(false);
+		}
+		if(formaAtirador1.intersects(formaPlayer) && arvoresCortadas >= 25) {
+			isRunning = false;
+			bom = true;
+			atirador[0].setVisivel(false);
+			atirador[1].setVisivel(false);
 			player.setVisivel(false);
 		}
 		
 	}
-	
-	private class MouseHandler implements MouseListener{
-		
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		}
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		}
-		@Override
-		public void mouseEntered(MouseEvent e) {
-		}
-		@Override
-		public void mouseExited(MouseEvent e) {
-		}
-		@Override
-		public void mousePressed(MouseEvent e) {
-		}
-	}
-	
 	
 	private class TecladoAdapter extends KeyAdapter {
 		

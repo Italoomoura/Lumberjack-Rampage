@@ -11,10 +11,6 @@ public class Player {
 	
 	private Image imagem;
 	private ImageIcon referencia = new ImageIcon("res\\LumberjackPixelArt.png");
-	private ImageIcon W = new ImageIcon("res\\playerW.png");
-	private ImageIcon S = new ImageIcon("res\\playerS.png");
-	private ImageIcon A = new ImageIcon("res\\playerA.png");
-	private ImageIcon D = new ImageIcon("res\\playerD.png");
 	
 	public Player() {
 		this.x = 472;
@@ -43,20 +39,16 @@ public class Player {
 		int cod = tecla.getKeyCode();
 		
 		if(cod == KeyEvent.VK_W) {
-			dy = -7;
-			//imagem = W.getImage();	Ainda deixei esses sprites no arquivo pq n sabia se ia querer usar		
+			dy = -7;	
 		}
 		if(cod == KeyEvent.VK_S) {
-			dy = 7;
-			//imagem = S.getImage();	
+			dy = 7;	
 		}
 		if(cod == KeyEvent.VK_A) {
-			dx = -7;
-			//imagem = A.getImage();	
+			dx = -7;	
 		}
 		if(cod == KeyEvent.VK_D) {
 			dx = 7;
-			//imagem = D.getImage();	
 		}
 	}
 	

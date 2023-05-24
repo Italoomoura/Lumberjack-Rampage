@@ -6,7 +6,7 @@ public class Container extends JFrame {
 	
 	public Container() {
 		add(new Fase());
-		setTitle("O JOGO");
+		setTitle("Lumberjack Rampage");
 		setSize(1024,728);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
 		setLocationRelativeTo(null);

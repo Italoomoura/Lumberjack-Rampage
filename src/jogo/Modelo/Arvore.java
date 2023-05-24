@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 public class Arvore {
 	private int x, y, altura, largura;
 	
-	//List das árvores
 	private String[] listImg = {"res\\Arvore1.png", "res\\Arvore2.png"};
 	
 	private Random random = new Random();
@@ -22,7 +21,6 @@ public class Arvore {
 		this.y = random.nextInt(501);
 		isVisivel = true;
 		
-		//Aleatoriza as árvores entre 0 e 1, sprite listImg[0] ou listImg[1]
 		referencia = new ImageIcon(listImg[random.nextInt(2)]);
 	}
 	

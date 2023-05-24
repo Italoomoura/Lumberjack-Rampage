@@ -22,13 +22,13 @@ public class Fase extends JPanel implements ActionListener{
 	private Player player;
 	private Timer timer;
 	private Policial atirador[] = new Policial[2];
-	private Arvore arvore[] = new Arvore[51];
+	private Arvore arvore[] = new Arvore[50];
 	private int i = 0, arvoresCortadas = 0;
 	private boolean isRunning, bom;
 	
 	ImageIcon referenciaFundo = new ImageIcon("res\\grass.png");
-	ImageIcon referenciaBom = new ImageIcon("res\\Fimbom.png");
-	ImageIcon referenciaRuim = new ImageIcon("res\\Fimruim.png");
+	ImageIcon referenciaBom = new ImageIcon("res\\Fimbom.jpg");
+	ImageIcon referenciaRuim = new ImageIcon("res\\Fimruim.jpg");
 	
 	public Fase(){
 		isRunning = true;
@@ -41,16 +41,14 @@ public class Fase extends JPanel implements ActionListener{
 		player = new Player();
 		player.load();
 		
-		//Render do policial
 		for(int i = 0; i < atirador.length; i++) {
 			atirador[i] = new Policial();
 			atirador[i].load();
 		}
 		
-		//Você é simplesmente psicopata por ter feito isso aqui, n é possível q esse seja o jeito certo
 		for (int i = 0; i < arvore.length; i++) {
 			arvore[i] = new Arvore();
-			arvore[i].load(); // Inicializa cada elemento do array com uma nova instância de Arvore
+			arvore[i].load();
 		}
 		
 		addKeyListener(new TecladoAdapter());
@@ -130,24 +128,20 @@ public class Fase extends JPanel implements ActionListener{
 	}
 	
 	public void atualizarMovimentoInimigo() {
-	    double v0 = 2.0, v1 = 3.0; // Velocidade do inimigo
-
-	    // Atualiza a posição do inimigo em direção ao jogador
+	    double v0 = 2.0, v1 = 3.0;
 	
 	    double dX0 = player.getX() - atirador[0].getX();
 		double dY0 = player.getY() - atirador[0].getY();
 		double dX1 = player.getX() - atirador[1].getX();
 		double dY1 = player.getY() - atirador[1].getY();
-		double distancia0 = Math.sqrt(dX0 * dX0 + dY0 * dY0); // Distância entre o inimigo e o jogador
+		double distancia0 = Math.sqrt(dX0 * dX0 + dY0 * dY0);
 		double distancia1 = Math.sqrt(dX1 * dX1 + dY1 * dY1);
-		
-		// Normaliza a direção (transforma em um vetor unitário)
+
 		dX0 /= distancia0;
 		dY0 /= distancia0;
 		dX1 /= distancia1;
 		dY1 /= distancia1;
 
-		// Atualiza a posição do inimigo em direção ao jogador com base na velocidade
 		int nPX0 = (int) (atirador[0].getX() + dX0 * v0);
 		int nPY0 = (int) (atirador[0].getY() + dY0 * v0);
 		int nPX1 = (int) (atirador[1].getX() + dX1 * v1);

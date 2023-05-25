@@ -13,11 +13,11 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Fase extends JPanel implements ActionListener{
 
+	private static final long serialVersionUID = 1L;
 	private Image fundo, bomf, ruimf;
 	private Player player;
 	private Timer timer;

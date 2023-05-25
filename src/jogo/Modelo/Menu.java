@@ -6,22 +6,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jogo.Container;
+import jogo.ContainerGame;
 
 public class Menu extends JPanel{
+
+	private static final long serialVersionUID = 1L;
+
 	public Menu(){
 		JButton btnStart = new JButton("Começar");
-		btnStart.setBounds(412, 400, 200, 50);
+		btnStart.setBounds(412, 500, 200, 50);
 		btnStart.setBackground(new Color(95, 162, 50));
 		btnStart.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JButton btnTutorial = new JButton("Tutorial");
-		btnStart.setBounds(412, 400, 200, 50);
+		btnStart.setBounds(412, 600, 200, 50);
 		btnStart.setBackground(new Color(95, 162, 50));
 		btnStart.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JButton btnExit = new JButton("Sair");
-		btnStart.setBounds(412, 400, 200, 50);
+		btnStart.setBounds(412, 700, 200, 50);
 		btnStart.setBackground(new Color(95, 162, 50));
 		btnStart.setFont(new Font("Arial", Font.BOLD, 24));
 		
@@ -31,12 +34,12 @@ public class Menu extends JPanel{
 		
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Container(2);
+				new ContainerGame(3);
 			}
 		});
 		btnTutorial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Container(3);
+				new ContainerGame(4);
 			}
 		});
 		btnExit.addActionListener(new ActionListener() {

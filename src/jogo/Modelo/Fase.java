@@ -11,9 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Fase extends JPanel implements ActionListener{
@@ -34,28 +34,27 @@ public class Fase extends JPanel implements ActionListener{
 		isRunning = true;
 		setFocusable(true);
 		setDoubleBuffered(true);
-		
-		
+			
 		fundo = referenciaFundo.getImage();
-		
+			
 		player = new Player();
 		player.load();
-		
+			
 		for(int i = 0; i < atirador.length; i++) {
 			atirador[i] = new Policial();
 			atirador[i].load();
 		}
-		
+			
 		for (int i = 0; i < arvore.length; i++) {
 			arvore[i] = new Arvore();
 			arvore[i].load();
 		}
-		
+			
 		addKeyListener(new TecladoAdapter());
-		
+			
 		timer = new Timer(5, this);
 		timer.start();
-
+			
 	}
 	
 	public void paint(Graphics g) {

@@ -24,7 +24,7 @@ public class ContainerGame extends JFrame {
 	public void tela(int x) {
 		switch (x){
 			case 1:
-				setSize(400,120);
+				setSize(1024,728);
 				add(new Menu());
 				break;
 			case 2:
@@ -38,10 +38,6 @@ public class ContainerGame extends JFrame {
 			case 4:
 				setSize(1024,728);
 				add(new Tutorial());
-				break;
-			default:
-				setSize(300,250);
-				add(new Menu());
 				break;
 		}
 	}

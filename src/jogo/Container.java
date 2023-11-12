@@ -1,5 +1,4 @@
 package jogo;
-
 import javax.swing.JFrame;
 import jogo.Modelo.Menu;
 import jogo.Modelo.Fase;

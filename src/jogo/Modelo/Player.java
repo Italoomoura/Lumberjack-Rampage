@@ -87,5 +87,4 @@ public class Player {
 	public void setVisivel(boolean isVisivel) {
 		this.isVisivel = isVisivel;
 	}
-	
 }

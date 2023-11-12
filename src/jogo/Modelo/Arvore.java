@@ -1,9 +1,7 @@
 package jogo.Modelo;
-
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 
 public class Arvore {

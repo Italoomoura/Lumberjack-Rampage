@@ -193,5 +193,4 @@ public class Fase extends JPanel implements ActionListener{
 			player.keyRelease(e);
 		}
 	}
-	
 }
